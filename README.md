@@ -52,7 +52,7 @@ With these datasets, **I am analyzing the nutritional values of each recipe and 
 
 6. Finally after obtaining new columns, I start dropping columns that are irrelevant to my research. This includes: `'contributor_id'`, `'submitted'`, `'steps'`, `'description'`,`'user_id'`, `'review'`, `'date'`, `'ingredients'`, `'tags'`, and `'nutrition'`.
 
-The resulting dataframe datatypes are shown:
+The resulting dataframe datatypes are shown as:
 
 | Column             | Description | 
 | ------------------ | ----------- |
@@ -83,3 +83,14 @@ The cleaned dataframe consists of 234429 rows and 17 columns. Since there are a 
 | 412 broccoli casserole               | 306168 |        40 |       5.0  |    5.0   |          194.8 |           22.0 | 3.0 |True               |    0.1 | True |
 | 412 broccoli casserole               | 306168 |       40  |        5.0 |    5.0   |          194.8 |           22.0 | 3.0 |True                |    0.1  | True |
 | 412 broccoli casserole               | 306168 |        40 |         5.0 |   5.0   |         194.8  |           22.0 | 3.0 |True              |    0.1 |  True | 
+
+### Univariate Analysis 
+
+For this analysis, I examined the distribution of calories in a recipe. I first had to filter the dataframe to be less than 5000 calories to remove any outliers. As the plot shows, the distribution is skewed to the right, indicating that most recipes on food.com have a lower calorie content. This plot is also showing a decreasing trend, meaning that as the calorie content increases, there tend to be less recipes. 
+
+<iframe
+  src="assets/univariate.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>

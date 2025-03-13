@@ -94,3 +94,35 @@ For this analysis, I examined the distribution of calories in a recipe. I first 
   height="600"
   frameborder="0"
 ></iframe>
+
+I have also plotted the distribution of protein content in recipes. 
+
+<iframe
+  src="assets/univariate2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+I first had to filter out any outliers, so I used 100 grams of protein as a cutoff. As the plot shows, this distribution is skewed to the right, meaning that majority of recipes on food.com have a lower protein content. This suggestst that higher protein recipes are less frequent than recipes with lower protein content. 
+
+### Bivariate Analysis 
+
+For this analysis, the scatter plot shows that as protein content (PDV) increases, recipe ratings tend to decrease slightly, indicating a negative relationship. However, the slope appears relatively shallow, suggesting the effect might be small. Most recipes cluster around higher ratings, even when protein content is moderately high.
+
+<iframe
+  src="assets/bivariate.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+### Interesting Aggregations
+
+| contains_vegetable | is_healthy | Avg Calories | Avg Rating |
+| False          | False       | 431.83     |      4.68 |
+| False          | True        | 459.97     |      4.66 | 
+| True           | False       | 298.87     |      4.72 | 
+| True           | True        | 358.92     |      4.71 |
+
+This grouped table shows that recipes with vegetables tend to have lower calories and slightly higher ratings compared to those without vegetables. Interestingly, "healthy" recipes without vegetables have higher average calories than unhealthy ones, suggesting that the "healthy" label may depend on factors beyond just calorie count. This analysis helps identify patterns in recipe nutrition and user preferences, offering insights for healthier meal choices.

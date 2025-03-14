@@ -209,10 +209,28 @@ The model achieved an accuracy of **0.7525**, meaning that nearly 75% of recipes
 
 ## Final Model
 
-For the final model, I added 5 more features: `'protein (PDV)'`, `'total fat (PDV)'`, `'sodium (PDV)'`, `'sugar (PDV)'`, and `'saturated fat (PDV)'` to the 2 we had-`'calories'` and `'carbohydrates (PDV)'`. I chose the other 5 because I believe that there are negative and positives that these nutrional facts output. Adding protein is a positive since this nutrient is needed for recovery and muscle growth. While a negative can too much `'saturated fat (PDV)'`, can lead to the increase in heart diseases. These features added will make my final model more accurate since I am calculating both the negatives and positives together. 
+For the final model, I added 5 more features: `'protein (PDV)'`, `'total fat (PDV)'`, `'sodium (PDV)'`, `'sugar (PDV)'`, and `'saturated fat (PDV)'` to the 2 we had-`'calories'` and `'carbohydrates (PDV)'`. I chose the other 5 because I believe that there are negative and positives that these nutrional facts output. Adding protein is a positive since this nutrient is needed for recovery and muscle growth. While a negative like `'saturated fat (PDV)'`, can lead to the increase in heart diseases. These features added will make my final model more accurate since I am calculating both the negatives and positives together. 
 
 The model that I am using is a Random Forest Classifier which is trained to predict whether a recipe is healthy based on nutritional facts. It uses 7 features stated befire which are scaled for consistency. A GridSearchCV to find-tune hyperparameters: The `n_estimators` parameter controls the number of trees in the forest, with values of 50 and 100 being tested to balance performance and efficiency. The `max_depth` parameter limits how deep each tree can grow, with values of 5 and 10 helping to prevent overfitting. The `min_samples_split` parameter determines the minimum number of samples needed to split a node, with values of 2, 5, and 10 being tested to ensure the model generalizes well. Lastly, the `criterion` parameter tests both "gini" and "entropy" to determine the best method for measuring the quality of splits in the decision trees.
 
 The accuracy score is now **0.991788**, meaning 99.18% of the time this model was able to predict the recipe is healthy which is a huge improvement from our baseline model (0.7525). The F1-score has also improved being **0.991785** from our baseline model (0.7591), since our F1-score is super high, we can ensure that this final model balances precision and recall, ensuring high accuracy without bias towards false positives or false negatives. Since these are huge improvements, this suggests that our adjustment to the final model is effiency for our predictions.  
 
 ## Fairness Analysis
+
+For this fairness analysis, I compared the model's performance between recipes that contain vegetables and recipes that do not contain vegetables. I will be using the F1-score to ensure a fair assessment of model performance across both groups.
+
+The groups that I decided to evaluate are recipes that contain vegetables vs. no vegetables because vegetables are often associated with healthier food choices, and wanted to see if this model's performance is based on this key ingredient.
+
+**Null Hypothesis**: The model is fair. The F1-score for recipes with vegetables and those without vegetables are roughly the same, and any difference is due to random chance.
+
+**Alternative Hypothesis**: The model is unfair. The F1-score for recipes with vegetables is lower than for those without vegetables.
+
+<iframe
+  src="assets/fairness_analysis.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+After performing a permutation test with 10000 trials, the p-value I got is **0.6896** and since this value is greater than the 0.05 significance level, we **fail to reject** the null hypothesis. This suggest there is no significant difference in F1-scores between the two groups, the model performs fairly across recipes with and without vegetables.
+

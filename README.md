@@ -161,7 +161,7 @@ Now I will perform a premutation test on `'rating'` and `'minutes'`.
 
 **Alternative Hypothesis**: The missingness of `'ratings'` depends on cooking time (`'minutes'`).
 
-**Test Statistic**: Difference in mean cooking time (`'minutes'`) between recipes with missing ratings and those with non-missing ratings:
+**Test Statistic**: Difference in mean cooking time (`'minutes'`) between recipes with missing ratings and those with non-missing ratings
 
 <iframe
   src="assets/nmar2.html"
@@ -180,7 +180,7 @@ In this hypothesis test, I will be testing if there is a a difference in health 
 
 **Alternative Hypothesis**: There is a difference in the average health score between recipes that contain vegetables and recipes that do not contain vegetables.
 
-**Test Statistic**: Difference in mean health scores.
+**Test Statistic**: Difference in mean health scores between recipes with vegetables and non-vegetables.
 
 Here is the histogram containing the distribution of health scores between vegetables and non-vegetables using a premutation test, shuffling the health scores from both groups.
 

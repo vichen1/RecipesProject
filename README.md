@@ -191,7 +191,7 @@ Here is the histogram containing the distribution of health scores between veget
   frameborder="0"
 ></iframe>
 
-From this distribution, we have an **observed statistic** of -0.00534 and a **p-value** of 0.0. Given that our p-value is 0.0, this is lower than the significance level of 0.05, we reject the null hypothesis. This suggests that recipes without vegetables tend to have a slightly higher health score than those with vegetables.
+From this distribution, we have an **observed statistic** of -0.00534 and a **p-value** of 0.0, this is lower than the significance level of 0.05, meaning that we reject the null hypothesis. This suggests that there is a statistically significant difference in the average health scores between recipes that contain vegetables and those that do not. Since the observed difference is negative (-0.00534), it indicates that recipes without vegetables tend to have a slightly higher health score compared to those with vegetables.
 
 ## Framing a Prediction Problem
 

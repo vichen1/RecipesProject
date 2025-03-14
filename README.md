@@ -1,4 +1,4 @@
-# Healthiness Between Recipes 
+# Analyzing the Healthiness Between Recipes 
 
 This is a project for DSC80 at UCSD.
 
@@ -161,7 +161,7 @@ Now I will perform a premutation test on `'rating'` and `'minutes'`.
 
 **Alternative Hypothesis**: The missingness of `'ratings'` depends on cooking time (`'minutes'`).
 
-**Test Statistic**: Absolute difference in mean cooking time (`'minutes'`) between recipes with missing ratings and those with non-missing ratings:
+**Test Statistic**: Difference in mean cooking time (`'minutes'`) between recipes with missing ratings and those with non-missing ratings:
 
 <iframe
   src="assets/nmar2.html"
@@ -173,3 +173,25 @@ Now I will perform a premutation test on `'rating'` and `'minutes'`.
 The **observed statistic** is 51.45237039852127 (vertical line) and the **p-value** is 0.202 which is more than the 0.05 significance level. Since the p-value is more than the significance level, I fail to reject the null hypothesis. Therefore, the missingness of `'rating'` does not depend on the `'minutes'` column.
 
 ## Hypothesis Testing
+
+In this hypothesis test, I will be testing if there is a a difference in health scores over recipes that contain vegetebles and no vegetables. The columns needed for this investigation will be `'contains_vegetables'` and `'health_score'`.
+
+**Null Hypothesis**: There is no difference in the average health score between recipes that contain vegetables and recipes that do not contain vegetables.
+
+**Alternative Hypothesis**: There is a difference in the average health score between recipes that contain vegetables and recipes that do not contain vegetables.
+
+**Test Statistic**: Difference in mean health scores.
+
+Here is the histogram containing the distribution of health scores between vegetables and non-vegetables using a premutation test, shuffling the health scores from both groups.
+
+<iframe
+  src="assets/hypothesis_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+From this distribution, we have an **observed statistic** of -0.00534 and a **p-value** of 0.0. Given that our p-value is 0.0, this is lower than the significance level of 0.05, we reject the null hypothesis. This suggests that recipes without vegetables tend to have a slightly higher health score than those with vegetables.
+
+## Framing a Prediction Problem
+

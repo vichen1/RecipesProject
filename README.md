@@ -195,3 +195,8 @@ From this distribution, we have an **observed statistic** of -0.00534 and a **p-
 
 ## Framing a Prediction Problem
 
+From the last section, I found out that having vegetables in your recipe may have an impact on the health score. Since I only investigated the healhiness of vegetables, do other nutritional facts affect the health score of a recipe?
+
+The prediction problem I am addressing is a binary classification task, where the goal is to predict whether a recipe is healthy or not based on its nutritional content. The response variable is `'is_healthy'`, which is a binary label indicating whether a recipe meets certain health criteria. I chose this variable because it provides valuable insights into how different nutritional components contribute to a recipe's overall healthiness. To evaluate the model, I am using F1-score in addition to accuracy, as F1-score balances precision and recall, making it more reliable in cases where the dataset may be imbalanced. 
+
+Lastly, all features used in training, such as calories, protein, and carbohydrate content, would be available at the time of prediction, ensuring the model makes decisions based on realistic and accessible data.

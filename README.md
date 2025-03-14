@@ -50,7 +50,7 @@ With these datasets, **I am analyzing the nutritional values of each recipe and 
 
 5. Since I am investing the healthiness in the dataset, I created another column `'contains_vegetables'` that uses the `'tags'` column to check if the word "vegetable" is found. I also added the `'health_score'` column using 3 columns- `'protein (PDV)'`, `'calories'`, and `'carbohydrates (PDV)'`. Finally, to determine if the recipe is healthy in this dataset, I used the health score of the recipe compared to the median of the `'health_score'` column. 
 
-6. Finally after obtaining new columns, I start dropping columns that are irrelevant to my research. This includes: `'contributor_id'`, `'submitted'`, `'steps'`, `'description'`,`'user_id'`, `'review'`, `'date'`, `'ingredients'`, `'tags'`, and `'nutrition'`.
+6. Finally after obtaining new columns, I start dropping columns that are irrelevant to my research. This includes: `'contributor_id'`, `'steps'`, `'description'`,`'user_id'`, `'review'`, `'date'`, `'ingredients'`, `'tags'`, and `'nutrition'`.
 
 The resulting dataframe datatypes are shown as:
 
@@ -59,6 +59,7 @@ The resulting dataframe datatypes are shown as:
 | `'name'`           | object | 
 | `'recipe_id'` | int64 | 
 | `'minutes'`        | int64 | 
+| `'submitted'`      | datetime64[ns] | 
 | `'n_steps'`        | int64 | 
 | `'n_ingredients'`  | int64 |
 | `'rating'` | float64 | 
@@ -126,3 +127,49 @@ For this analysis, the scatter plot shows that as protein content (PDV) increase
 | True           | True        | 358.92     |      4.71 |
 
 This grouped table shows that recipes with vegetables tend to have lower calories and slightly higher ratings compared to those without vegetables. Interestingly, "healthy" recipes without vegetables have higher average calories than unhealthy ones, suggesting that the "healthy" label may depend on factors beyond just calorie count. This analysis helps identify patterns in recipe nutrition and user preferences, offering insights for healthier meal choices.
+
+## NMAR Analysis
+
+I believe that the rating column in the dataset is NMAR (Not Missing At Random). The missingness in this column is likely due to the fact that some recipes were never rated by users, which is directly related to the missing values themselves. If a recipe is new, unpopular, or rarely viewed, it is more likely to have a missing rating, meaning the reason for missingness is not random but instead depends on user engagement. This makes it NMAR, as the missing data is influenced by an unobserved factor—whether or not users chose to rate the recipe.
+
+To better understand this missingness and potentially classify it as MAR (Missing At Random) instead of NMAR, I would want to obtain additional data such as the number of views or interactions each recipe has received. If I find that recipes with fewer views tend to have missing ratings, then the missingness could be explained by another observed variable (recipe popularity), making it MAR rather than NMAR.
+
+### Missing Dependency
+
+For this part, I am going to test if the missingness of `'rating'` column depends on other columns. The two columns that I am using are `'submitted'` for the month and `'minutes'`. The significance level that I chose for both tests is **0.05**, and the test statistic is the absolute difference in means and the difference in means. 
+
+First, I am performing a permutation test on `'rating'` and `'submitted'`.
+
+**Null Hypothesis**: The missingness of `'rating'` is independent of the month the recipe was `'submitted'`. 
+
+**Alternative Hypothesis**: The missingness of `'rating'` depends on the month the recipe was `'submitted'`.
+
+**Test Statistic**: Absolute difference in mean submission month between recipes with missing ratings and those with non-missing ratings
+
+<iframe
+  src="assets/nmar.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+After performing permutation tests, I found that the **observed statistic** (vertical line) for this test to be 0.08493584666558185 and a **p-value** of 0.024. Since the p-value is less than the 0.05 significance level, I reject the null hypothesis. Therefore, the missingness of `'rating'` depends on the `month` the recipe was submitted.
+
+Now I will perform a premutation test on `'rating'` and `'minutes'`.
+
+**Null Hypothesis**: The missingness of `'ratings'` is independent of cooking time (`'minutes'`). 
+
+**Alternative Hypothesis**: The missingness of `'ratings'` depends on cooking time (`'minutes'`).
+
+**Test Statistic**: Absolute difference in mean cooking time (`'minutes'`) between recipes with missing ratings and those with non-missing ratings:
+
+<iframe
+  src="assets/nmar2.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The **observed statistic** is 51.45237039852127 (vertical line) and the **p-value** is 0.202 which is more than the 0.05 significance level. Since the p-value is more than the significance level, I fail to reject the null hypothesis. Therefore, the missingness of `'rating'` does not depend on the `'minutes'` column.
+
+## Hypothesis Testing

@@ -233,5 +233,5 @@ The groups that I decided to evaluate are recipes that contain vegetables vs. no
   frameborder="0"
 ></iframe>
 
-After performing a permutation test with 10000 trials, the p-value I got is **0.6896** and since this value is greater than the 0.05 significance level, we **fail to reject** the null hypothesis. This suggest there is no significant difference in F1-scores between the two groups, the model performs fairly across recipes with and without vegetables.
+After performing a permutation test with 10000 trials, the p-value I got is **0.2403** and since this value is greater than the 0.05 significance level, we **fail to reject** the null hypothesis. This suggest there is no significant difference in F1-scores between the two groups, the model performs fairly across recipes with and without vegetables.
 

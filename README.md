@@ -6,33 +6,33 @@ Author: Victor Chen
 
 ## Introduction 
 
-Food is a natural neccessity for humans and cooking can be both a hobby and a necessity for health, depending on the perspective and circumstances of the person involved. As a hobby, cooking is an enjoyable and creative activity where people can oftern experiment with different ingredients, creating new recipes. On the other hand, people cook to control their nutrition, making sure they get the right amount of protein, vitamins, and other essential nutrients. According to the Centers for Disease Control and Prevention (CDC), the prevalence of obesity among adults (aged 20 and older) in the United States was 41.9% in 2017-2020. With this information in mind, I wonder how **healthy shown from nutritional facts are the recipes shown on food.com.** I want to use data analysis techniques to compare health scores etc. between all the recipes using the datasets from [food.com](https://www.food.com/).
+Food is a natural neccessity for humans and cooking can be both a hobby and a necessity for health, depending on the perspective and circumstances of the person involved. As a hobby, cooking is an enjoyable and creative activity where people can oftern experiment with different ingredients, creating new recipes. On the other hand, people cook to control their nutrition, making sure they get the right amount of protein, vitamins, and other essential nutrients. In 2024, the CDC reports that over 40% of U.S. adults are obese. With this information in mind, I wonder how **healthy are the recipes shown on food.com using the nutritioncal facts.** I want to use data analysis techniques to compare health scores etc. between all the recipes using the datasets from [food.com](https://www.food.com/).
 
 There are 2 datasets given on food.com, the first, `'recipe'`, contains 83782 rows and 12 columns:
 
 | Column             | Description | 
 | ------------------ | ----------- |
 | `'name'`           | Name of Recipe | 
-| `'id'`      | ID of Recipe | 
+| `'id'`             | ID of Recipe | 
 | `'minutes'`        | Time taken to make | 
-| `'contributor_id'`   | ID of the person who submitted the recipe | 
+| `'contributor_id'` | ID of the person who submitted the recipe | 
 | `'submitted'`      | Date the recipe was submitted | 
-| `'tags'`             | Food.com tags for the recipe | 
+| `'tags'`           | Food.com tags for the recipe | 
 | `'nutrition'`      | Nutritional values in the format [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), and carbohydrates (PDV)] | 
 | `'n_steps'`        | Number of steps to prepare the recipe| 
 | `'steps'`          | Directions for steps in order in text | 
-| `'description'`   | Description that the user provided | 
-| `'ingredients'`  | List of ingredients needed for the recipe| 
+| `'description'`    | Description that the user provided | 
+| `'ingredients'`    | List of ingredients needed for the recipe| 
 | `'n_ingredients'`  | Number of ingredients | 
 
 The second dataset `'interations` contains 731927 rows and 5 columns. Each row in this dataset holds a review from users on a recipe:
 
-| Column     | Description | 
-| `'user_id'` | ID of the user submitting the review | 
+| Column        | Description | 
+| `'user_id'`   | ID of the user submitting the review | 
 | `'recipe_id'` | ID of a specific recipe | 
-| `'date'` | Date of the review submitted | 
-| `'rating'` | Rating from 1 - 5 given | 
-| `'review'` | Review text | 
+| `'date'`      | Date of the review submitted | 
+| `'rating'`    | Rating from 1 - 5 given | 
+| `'review'`    | Review text | 
 
 With these datasets, **I am analyzing the nutritional values of each recipe and how they impact the healthiness scale.** Since the original datasets do not contain columns for the nutritional facts for each recipe, I separated the values to create new columns in the corresponding dataset. The columns created were `'calories (#)'`, `'total fat (PDV)'`, `'sugar (PDV)'` etc. PDV, percent daily value which indicates how much intake of that nutrient is to your total daily diet. The columns I will be using more closely will be `'calories (#)'`, `'protein (PDV)'`, and `'carbohydrates (PDV)'` to calculate the health score and create insights.
 
@@ -96,7 +96,7 @@ For this analysis, I examined the distribution of calories in a recipe. I first 
   frameborder="0"
 ></iframe>
 
-I have also plotted the distribution of protein content in recipes. 
+I have also plotted the distribution of protein content in recipes. For this analysis, I first had to filter out any outliers, so I used 100 grams of protein as a cutoff. As the plot shows, this distribution is skewed to the right, meaning that majority of recipes on food.com have a lower protein content. This suggestst that higher protein recipes are less frequent than recipes with lower protein content. 
 
 <iframe
   src="assets/univariate2.html"
@@ -105,7 +105,6 @@ I have also plotted the distribution of protein content in recipes.
   frameborder="0"
 ></iframe>
 
-I first had to filter out any outliers, so I used 100 grams of protein as a cutoff. As the plot shows, this distribution is skewed to the right, meaning that majority of recipes on food.com have a lower protein content. This suggestst that higher protein recipes are less frequent than recipes with lower protein content. 
 
 ### Bivariate Analysis 
 
@@ -153,7 +152,7 @@ First, I am performing a permutation test on `'rating'` and `'submitted'`.
   frameborder="0"
 ></iframe>
 
-After performing permutation tests, I found that the **observed statistic** (vertical line) for this test to be 0.08493584666558185 and a **p-value** of 0.024. Since the p-value is less than the 0.05 significance level, I reject the null hypothesis. Therefore, the missingness of `'rating'` depends on the `month` the recipe was submitted.
+After performing permutation tests, I found that the **observed statistic** (vertical line) for this test to be 0.0849 and a **p-value** of 0.024. Since the p-value is less than the 0.05 significance level, I reject the null hypothesis. Therefore, the missingness of `'rating'` depends on the `month` the recipe was submitted.
 
 Now I will perform a premutation test on `'rating'` and `'minutes'`.
 
@@ -170,7 +169,7 @@ Now I will perform a premutation test on `'rating'` and `'minutes'`.
   frameborder="0"
 ></iframe>
 
-The **observed statistic** is 51.45237039852127 (vertical line) and the **p-value** is 0.202 which is more than the 0.05 significance level. Since the p-value is more than the significance level, I fail to reject the null hypothesis. Therefore, the missingness of `'rating'` does not depend on the `'minutes'` column.
+The **observed statistic** is 51.4524 (vertical line) and the **p-value** is 0.202 which is more than the 0.05 significance level. Since the p-value is more than the significance level, I fail to reject the null hypothesis. Therefore, the missingness of `'rating'` does not depend on the `'minutes'` column.
 
 ## Hypothesis Testing
 
@@ -191,11 +190,11 @@ Here is the histogram containing the distribution of health scores between veget
   frameborder="0"
 ></iframe>
 
-From this distribution, we have an **observed statistic** of -0.00534 and a **p-value** of 0.0, this is lower than the significance level of 0.05, meaning that we reject the null hypothesis. This suggests that there is a statistically significant difference in the average health scores between recipes that contain vegetables and those that do not. Since the observed difference is negative (-0.00534), it indicates that recipes without vegetables tend to have a slightly higher health score compared to those with vegetables.
+From this distribution, we have an **observed statistic** of -0.00534 and a **p-value** of 0.0, this is lower than the significance level of 0.05, meaning that we **reject** the null hypothesis. This suggests that there is a statistically significant difference in the average health scores between recipes that contain vegetables and those that do not. Since the observed difference is negative (-0.00534), it indicates that recipes without vegetables tend to have a slightly higher health score compared to those with vegetables.
 
 ## Framing a Prediction Problem
 
-From the last section, I found out that having vegetables in your recipe may have an impact on the health score. Since I only investigated the healhiness of vegetables, do other nutritional facts affect the health score of a recipe?
+From the last section, I found out that having vegetables in your recipe may have an impact on the health score. Since I only investigated the healthiness of vegetables, do other nutritional facts affect the health score of a recipe?
 
 The prediction problem I am addressing is a binary classification task, where the goal is to predict whether a recipe is healthy or not based on its nutritional content. The response variable is `'is_healthy'`, which is a binary label indicating whether a recipe meets certain health criteria. I chose this variable because it provides valuable insights into how different nutritional facts contribute to a recipe's overall healthiness. To evaluate the model, I am using F1-score in addition to accuracy, as F1-score balances precision, making it more reliable in cases where the dataset may be imbalanced. 
 
@@ -209,9 +208,9 @@ The model achieved an accuracy of **0.7525**, meaning that nearly 75% of recipes
 
 ## Final Model
 
-For the final model, I added 5 more features: `'protein (PDV)'`, `'total fat (PDV)'`, `'sodium (PDV)'`, `'sugar (PDV)'`, and `'saturated fat (PDV)'` to the 2 we had-`'calories'` and `'carbohydrates (PDV)'`. I chose the other 5 because I believe that there are negative and positives that these nutrional facts output. Adding protein is a positive since this nutrient is needed for recovery and muscle growth. While a negative like `'saturated fat (PDV)'`, can lead to the increase in heart diseases. These features added will make my final model more accurate since I am calculating both the negatives and positives together. 
+For the final model, I added 5 more features: `'protein (PDV)'`, `'total fat (PDV)'`, `'sodium (PDV)'`, `'sugar (PDV)'`, and `'saturated fat (PDV)'` to the 2 we had-`'calories'` and `'carbohydrates (PDV)'`. I chose the other 5 because I believe there are negatives and positives that these nutrional facts output. For example, protein is a positive since this nutrient is needed for recovery and muscle growth. While a negative like `'saturated fat (PDV)'`, can lead to the increase in heart diseases. These features added will make my final model more accurate since I am calculating both the negatives and positives together. 
 
-The model that I am using is a Random Forest Classifier which is trained to predict whether a recipe is healthy based on nutritional facts. It uses 7 features stated befire which are scaled for consistency. A GridSearchCV to find-tune hyperparameters: The `n_estimators` parameter controls the number of trees in the forest, with values of 50 and 100 being tested to balance performance and efficiency. The `max_depth` parameter limits how deep each tree can grow, with values of 5 and 10 helping to prevent overfitting. The `min_samples_split` parameter determines the minimum number of samples needed to split a node, with values of 2, 5, and 10 being tested to ensure the model generalizes well. Lastly, the `criterion` parameter tests both "gini" and "entropy" to determine the best method for measuring the quality of splits in the decision trees.
+The model that I am using is a Random Forest Classifier which is trained to predict whether a recipe is healthy based on nutritional facts. It uses 7 features stated before which are scaled for consistency. A GridSearchCV to find-tune hyperparameters: The `n_estimators` parameter controls the number of trees in the forest, with values of 50 and 100 being tested to balance performance and efficiency. The `max_depth` parameter limits how deep each tree can grow, with values of 5 and 10 helping to prevent overfitting. The `min_samples_split` parameter determines the minimum number of samples needed to split a node, with values of 2, 5, and 10 being tested to ensure the model generalizes well. Lastly, the `criterion` parameter tests both "gini" and "entropy" to determine the best method for measuring the quality of splits in the decision trees.
 
 The accuracy score is now **0.991788**, meaning 99.18% of the time this model was able to predict the recipe is healthy which is a huge improvement from our baseline model (0.7525). The F1-score has also improved being **0.991785** from our baseline model (0.7591), since our F1-score is super high, we can ensure that this final model balances precision and recall, ensuring high accuracy without bias towards false positives or false negatives. Since these are huge improvements, this suggests that our adjustment to the final model is effiency for our predictions.  
 

@@ -40,7 +40,7 @@ With these datasets, **I am analyzing the nutritional values of each recipe and 
 
 ### Cleaning 
 
-1. I start by renaming `'id` in the `'recipes'` dataframe to `'recipe_id'` to ensure a easier merge since `'id'` in the recipes dataframe is the same as `'recipe_id'` from the `'interactions'` dataframe. I will then perform a left merge from `'recipes'` to `'interactions'` on the `'recipe_id'` column. 
+1. I start by renaming `'id'` in the `'recipes'` dataframe to `'recipe_id'` to ensure a easier merge since `'id'` in the recipes dataframe is the same as `'recipe_id'` from the `'interactions'` dataframe. I will then perform a left merge from `'recipes'` to `'interactions'` on the `'recipe_id'` column. 
 
 2. Zero would indicate that the recipe was not rated, therefore we would replace 0 with np.nan from the `'ratings'` column since ratings are usually on a scale of 1 to 5.
 
@@ -57,23 +57,23 @@ The resulting dataframe datatypes are shown as:
 | Column             | Description | 
 | ------------------ | ----------- |
 | `'name'`           | object | 
-| `'recipe_id'` | int64 | 
+| `'recipe_id'`      | int64 | 
 | `'minutes'`        | int64 | 
 | `'submitted'`      | datetime64[ns] | 
 | `'n_steps'`        | int64 | 
 | `'n_ingredients'`  | int64 |
-| `'rating'` | float64 | 
+| `'rating'`         | float64 | 
 | `'average_rating'` | float64 |
-| `'calories'` | float64 |
-| `'total fat (PDV)'` | float64 |
-| `'sugar (PDV)'` | float64 |
-| `'sodium (PDV)'` | float64 |
-| `'protein (PDV)'` | float64 |
+| `'calories'`       | float64 |
+| `'total fat (PDV)'`| float64 |
+| `'sugar (PDV)'`    | float64 |
+| `'sodium (PDV)'`   | float64 |
+| `'protein (PDV)'`  | float64 |
 | `'saturated fat (PDV)'` | float64 |
 | `'carbohydrates (PDV)'` | float64 |
 | `'contains_vegetables'` | bool |
-| `'health_score'` | float64 |
-| `'is_healthy'` | bool |
+| `'health_score'`        | float64 |
+| `'is_healthy'`          | bool |
 
 The cleaned dataframe consists of 234429 rows and 17 columns. Since there are a good amount of columns, I chose columns that are relevant to my research. Here are the first 5 rows of the dataframe:
 
@@ -203,9 +203,16 @@ Lastly, all features used in training, such as calories, protein, and carbohydra
 
 ## Baseline Model
 
-In this model, I built a Decision Tree Classifier to predict whether a recipe is healthy based on the nutritional content. The features I selected-`'calories'` and `'carbohydrates (PDV)'`- I selected these because I beleive these nutritional facts are very important to understand to operate throughout the day. To ensure that these features were comparable, I applied StandardScaler to normalize them. Then, I split the dataset into training and testing sets so the model could learn from a portion of the data and be evaluated on unseen data. I also limited the max_depth of the Decision Tree to 5 to prevent the model from overfitting and memorizing the training data rather than learning general patterns.
+In this model, I built a Decision Tree Classifier to predict whether a recipe is healthy based on the nutritional content. The features I selected-`'calories'` and `'carbohydrates (PDV)'`- I beleive these nutritional facts are very important to understand to operate throughout the day. To ensure that these features were comparable, I applied StandardScaler to normalize them. Then, I split the dataset into training and testing sets so the model could learn from a portion of the data and be evaluated on unseen data. I also limited the `max_depth` of the Decision Tree to 5 to prevent the model from overfitting and memorizing the training data rather than learning general patterns.
 
 The model achieved an accuracy of **0.7525**, meaning that nearly 75% of recipes were correctly classified as either healthy or unhealthy. Additionally, the F1-score of **0.7591** indicates a okay balance between precision and recall, ensuring that the model is not biased toward either false positives (incorrectly classifying unhealthy recipes as healthy) or false negatives (missing actual healthy recipes). These high scores suggest that the Decision Tree Classifier is effectively identifying patterns in the nutritional features to determine healthiness. Even though, the scores for this model is mediocre, our model still has a good amount of space for improvement. I will be adding more features, and tuning hyperparameters for the Final Model.
 
 ## Final Model
 
+For the final model, I added 5 more features: `'protein (PDV)'`, `'total fat (PDV)'`, `'sodium (PDV)'`, `'sugar (PDV)'`, and `'saturated fat (PDV)'` to the 2 we had-`'calories'` and `'carbohydrates (PDV)'`. I chose the other 5 because I believe that there are negative and positives that these nutrional facts output. Adding protein is a positive since this nutrient is needed for recovery and muscle growth. While a negative can too much `'saturated fat (PDV)'`, can lead to the increase in heart diseases. These features added will make my final model more accurate since I am calculating both the negatives and positives together. 
+
+The model that I am using is a Random Forest Classifier which is trained to predict whether a recipe is healthy based on nutritional facts. It uses 7 features stated befire which are scaled for consistency. A GridSearchCV to find-tune hyperparameters: The `n_estimators` parameter controls the number of trees in the forest, with values of 50 and 100 being tested to balance performance and efficiency. The `max_depth` parameter limits how deep each tree can grow, with values of 5 and 10 helping to prevent overfitting. The `min_samples_split` parameter determines the minimum number of samples needed to split a node, with values of 2, 5, and 10 being tested to ensure the model generalizes well. Lastly, the `criterion` parameter tests both "gini" and "entropy" to determine the best method for measuring the quality of splits in the decision trees.
+
+The accuracy score is now **0.991788**, meaning 99.18% of the time this model was able to predict the recipe is healthy which is a huge improvement from our baseline model (0.7525). The F1-score has also improved being **0.991785** from our baseline model (0.7591), since our F1-score is super high, we can ensure that this final model balances precision and recall, ensuring high accuracy without bias towards false positives or false negatives. 
+
+## Fairness Analysis

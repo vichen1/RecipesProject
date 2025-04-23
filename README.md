@@ -1,7 +1,5 @@
 # Analyzing the Healthiness Between Recipes 
 
-This is a project for DSC80 at UCSD.
-
 Author: Victor Chen
 
 ## Introduction 
